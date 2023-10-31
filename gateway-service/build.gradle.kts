@@ -25,6 +25,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
 	testImplementation("org.springframework.security:spring-security-test")
+	implementation ("org.springframework.cloud:spring-cloud-starter-openfeign")
 }
 
 dependencyManagement {
