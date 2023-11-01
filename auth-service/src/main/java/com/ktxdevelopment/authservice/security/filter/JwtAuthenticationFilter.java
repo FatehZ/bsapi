@@ -1,7 +1,7 @@
 package com.ktxdevelopment.authservice.security.filter;
 
 import com.ktxdevelopment.authservice.security.service.JwtService;
-import com.ktxdevelopment.authservice.token.repo.TokenRepository;
+import com.ktxdevelopment.authservice.repo.TokenRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -6,7 +6,7 @@ spring:
     name: auth-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/maindb
+    url: jdbc:postgresql://localhost:5432/bookdb
     username: db_username
     password: db_password
   jpa:
@@ -16,8 +16,6 @@ spring:
 
 application:
   security:
-    api-key: 0953be594e3832167f1f0827a2b69777e18a58e1042406cde3e63bd01edd1b6a
-    admin-key: 22fejnfwde9e8endqdud83dwfhghwdqwkd9w98fjwf78wwf9n
     jwt:
       secret-key: 368b38111be560242ac1202439b3aa8190811ebe560242ac120002
       expiration: 172800000 # 2 days

@@ -1,0 +1,26 @@
+spring:
+  liquibase:
+    change-log: classpath:/db/changelog/liquibase-changelog.xml
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bookdb
+    username: user
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database: postgresql
+    databasePlatform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+
+
+
+
+logging:
+  level:
+    root: error
+    web: error
+
+#server:
+#  port: 5432

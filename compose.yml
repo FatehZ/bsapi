@@ -1,0 +1,38 @@
+services:
+  db-service:
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: bookdb
+    networks:
+      - postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - 5432:5432
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: fatehzaliyev@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: pgadminpassword
+    networks:
+      - postgres
+    ports:
+      - 5050:80
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+  zipkin:
+    image: 'openzipkin/zipkin:latest'
+    ports:
+      - '9411:9411'
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:

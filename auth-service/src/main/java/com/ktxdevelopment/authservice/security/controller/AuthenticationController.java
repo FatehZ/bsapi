@@ -1,9 +1,10 @@
 package com.ktxdevelopment.authservice.security.controller;
 
-import com.ktxdevelopment.authservice.security.model.AuthenticationRequest;
-import com.ktxdevelopment.authservice.security.model.AuthenticationResponse;
-import com.ktxdevelopment.authservice.security.model.RegisterRequest;
+import com.ktxdevelopment.authservice.model.AuthenticationRequest;
+import com.ktxdevelopment.authservice.model.AuthenticationResponse;
+import com.ktxdevelopment.authservice.model.RegisterRequest;
 import com.ktxdevelopment.authservice.security.service.AuthenticationService;
+import com.ktxdevelopment.authservice.model.Role;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +23,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationController {
 
   private final AuthenticationService service;
-  @PostMapping(value = "/register", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
-      return ResponseEntity.ok(service.register(request));
+
+  @PostMapping(value = "/register/student", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<AuthenticationResponse> registerStudent(@RequestBody RegisterRequest request) {
+      return ResponseEntity.ok(service.register(request, Role.STUDENT));
+  }
+
+  @PostMapping(value = "/register/author", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<AuthenticationResponse> registerAuthor(@RequestBody RegisterRequest request) {
+    return ResponseEntity.ok(service.register(request, Role.AUTHOR));
   }
 
 

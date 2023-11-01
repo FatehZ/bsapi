@@ -1,7 +1,7 @@
 package com.ktxdevelopment.authservice.security.config;
 
+import com.ktxdevelopment.authservice.repo.UserRepository;
 import com.ktxdevelopment.authservice.security.service.LogoutService;
-import com.ktxdevelopment.authservice.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

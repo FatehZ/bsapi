@@ -1,15 +1,10 @@
 package com.ktxdevelopment.authservice.security.service;
 
-import com.ktxdevelopment.authservice.exceptions.AuthRequestNotCorrectException;
+import com.ktxdevelopment.authservice.exceptions.AuthRequestIncorrectException;
 import com.ktxdevelopment.authservice.exceptions.UserNotFoundException;
-import com.ktxdevelopment.authservice.security.model.AuthenticationRequest;
-import com.ktxdevelopment.authservice.security.model.AuthenticationResponse;
-import com.ktxdevelopment.authservice.security.model.RegisterRequest;
-import com.ktxdevelopment.authservice.token.model.Token;
-import com.ktxdevelopment.authservice.token.repo.TokenRepository;
-import com.ktxdevelopment.authservice.user.model.Role;
-import com.ktxdevelopment.authservice.user.model.entity.User;
-import com.ktxdevelopment.authservice.user.repo.UserRepository;
+import com.ktxdevelopment.authservice.model.*;
+import com.ktxdevelopment.authservice.repo.UserRepository;
+import com.ktxdevelopment.authservice.repo.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -21,61 +16,57 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Objects;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class AuthenticationService {
-    private final UserRepository repository;
+
+    UserRepository userRepository;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     @SneakyThrows
-    public AuthenticationResponse register(RegisterRequest request) {
-        var user = User.builder()
-                .username(request.getUsername())
-                .userId(UUID.randomUUID().toString())
+    public AuthenticationResponse register(RegisterRequest request, Role role) {
+
+        var user = UserEntity.builder()
                 .email(request.getEmail())
-                .encryptedPassword(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
+                .password(passwordEncoder.encode(request.getPassword()))
+                .role(role)
                 .build();
 
-        if (Objects.equals(user.getEmail(), "fatehzaliyev@gmail.com")){
-            user.setRole(Role.ADMIN);
-        }
-
-        try {
-            var savedUser = repository.save(user);
-            var jwtToken = jwtService.generateToken(user);
-            var refreshToken = jwtService.generateRefreshToken(user);
-            saveUserToken(savedUser, jwtToken);
-            return new AuthenticationResponse(jwtToken, refreshToken);
-        }catch (Exception e) {
-            throw new UserNotFoundException();
-        }
+        var savedUser = userRepository.save(user);
+        var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+        saveUserToken(savedUser, jwtToken);
+        return new AuthenticationResponse(jwtToken, refreshToken);
     }
+
+
+
 
     @SneakyThrows
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        var user = repository.findByEmail(request.getEmail()).orElseThrow(UserNotFoundException::new);
+
+        var user = userRepository.findByEmail(request.getEmail()).orElseThrow(UserNotFoundException::new);
+
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
+
         return AuthenticationResponse.builder()
                 .accessToken(jwtToken)
                 .refreshToken(refreshToken)
                 .build();
     }
 
-    private void saveUserToken(User user, String jwtToken) {
+    private void saveUserToken(UserEntity userEntity, String jwtToken) {
         var token = Token.builder()
-                .user(user)
+                .userEntity(userEntity)
                 .token(jwtToken)
                 .expired(false)
                 .revoked(false)
@@ -83,8 +74,8 @@ public class AuthenticationService {
         tokenRepository.save(token);
     }
 
-    private void revokeAllUserTokens(User user) {
-        var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getUserId());
+    private void revokeAllUserTokens(UserEntity userEntity) {
+        var validUserTokens = tokenRepository.findAllValidTokenByUser(userEntity.getId());
         if (validUserTokens.isEmpty())
             return;
         validUserTokens.forEach(token -> {
@@ -94,19 +85,20 @@ public class AuthenticationService {
         tokenRepository.saveAll(validUserTokens);
     }
 
+
     @SneakyThrows
     public AuthenticationResponse refreshToken(HttpServletRequest request, HttpServletResponse response) {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String refreshToken;
         final String userEmail;
         if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
-            throw new AuthRequestNotCorrectException();
+            throw new AuthRequestIncorrectException();
         }
 
         refreshToken = authHeader.substring(7);
         userEmail = jwtService.extractUsername(refreshToken);
         if (userEmail != null) {
-            var user = this.repository.findByEmail(userEmail).orElseThrow(UserNotFoundException::new);
+            var user = userRepository.findByEmail(userEmail).orElseThrow(UserNotFoundException::new);
 
             if (jwtService.isTokenValid(refreshToken, user)) {
 
@@ -117,7 +109,6 @@ public class AuthenticationService {
 
                 return AuthenticationResponse.builder().accessToken(accessToken).refreshToken(refreshToken).build();
             }
-        }
-        throw new UserNotFoundException();
+        }{ throw new AuthRequestIncorrectException(); }
     }
 }

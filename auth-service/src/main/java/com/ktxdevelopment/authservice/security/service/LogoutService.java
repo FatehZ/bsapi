@@ -1,6 +1,6 @@
 package com.ktxdevelopment.authservice.security.service;
 
-import com.ktxdevelopment.authservice.token.repo.TokenRepository;
+import com.ktxdevelopment.authservice.repo.TokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
