@@ -77,8 +77,9 @@
 
 
     <changeSet id="createBookTable" author="fatehz">
+
         <createTable tableName="books">
-            <column name="id" type="serial">
+            <column name="id" type="varchar(36)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)">
@@ -89,36 +90,75 @@
             </column>
         </createTable>
 
-        <createIndex tableName="books" indexName="idx_author_id">
-            <column name="author_id"/>
-        </createIndex>
+
+
+<!--        <createIndex tableName="books" indexName="idx_author_id">-->
+<!--            <column name="author_id"/>-->
+<!--        </createIndex>-->
+    </changeSet>
+
+    <changeSet id="createIndex" author="fatehz" runOnChange="true">
+        <sql>
+            CREATE INDEX IF NOT EXISTS idx_author_id ON books(author_id);
+        </sql>
     </changeSet>
 
 
-    <changeSet id="createStudentTable" author="fatehz">
-        <createTable tableName="students">
-            <column name="id" type="varchar(36)">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="age" type="integer">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_id" type="varchar(36)">
-                <constraints foreignKeyName="fk_student_user" references="users(id)"/>
-            </column>
-        </createTable>
-
-        <createIndex tableName="students" indexName="idx_student_id">
-            <column name="id"/>
-        </createIndex>
-
-        <createIndex tableName="students" indexName="idx_user_id">
-            <column name="user_id"/>
-        </createIndex>
-
+    <changeSet id="createStudentsTable" author="fatehz">
+        <sql>
+            CREATE TABLE students (
+            id varchar(36) NOT NULL,
+            name varchar(255) NOT NULL,
+            age int NOT NULL,
+            -- Add other columns as needed
+            PRIMARY KEY (id)
+            );
+        </sql>
     </changeSet>
+
+
+
+    <!--    <changeSet id="createStudentTable" author="fatehz">-->
+
+<!--        <createTable tableName="students">-->
+<!--            <column name="id" type="varchar(36)">-->
+<!--                <constraints primaryKey="true" nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="name" type="varchar(255)">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="age" type="integer">-->
+<!--                <constraints nullable="false"/>-->
+<!--            </column>-->
+<!--            <column name="user_id" type="varchar(36)">-->
+<!--                <constraints foreignKeyName="fk_student_user" references="users(id)"/>-->
+<!--            </column>-->
+<!--        </createTable>-->
+
+<!--&lt;!&ndash;        <createIndex tableName="students" indexName="idx_student_id">&ndash;&gt;-->
+<!--&lt;!&ndash;            <column name="id"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </createIndex>&ndash;&gt;-->
+
+<!--&lt;!&ndash;        <createIndex tableName="students" indexName="idx_user_id" >&ndash;&gt;-->
+<!--&lt;!&ndash;            <column name="user_id"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </createIndex>&ndash;&gt;-->
+
+
+<!--    </changeSet>-->
+
+    <changeSet id="createReadingBooksTable" author="fatehz">
+        <sql>
+            CREATE TABLE reading_books (
+            student_id varchar(36) NOT NULL,
+            book_id varchar(36) NOT NULL,
+            PRIMARY KEY (student_id, book_id),
+            FOREIGN KEY (student_id) REFERENCES students(id) ON DELETE CASCADE ON UPDATE CASCADE,
+            FOREIGN KEY (book_id) REFERENCES books(id) ON DELETE CASCADE ON UPDATE CASCADE
+            );
+        </sql>
+    </changeSet>
+
+
+
 
 </databaseChangeLog>

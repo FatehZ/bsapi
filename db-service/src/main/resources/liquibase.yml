@@ -6,4 +6,4 @@ username: user
 password: password
 
 # Liquibase settings
-changeLogFile: classpath:/db/changelog/liquibase-changelog.xml
+changeLogFile: classpath:/db/changelog/db.changelog-master.yaml

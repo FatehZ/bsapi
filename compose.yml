@@ -1,5 +1,63 @@
 services:
+
+  gateway-service:
+    build:
+      context: ./gateway-service
+    restart: unless-stopped
+    ports:
+      - 8081:8081  # Assuming your gateway service runs on port 8081
+    depends_on:
+      - auth-service
+      - db-service
+      - postgres
+      - zipkin
+
+
+  auth-service:
+    build:
+      context: ./auth-service
+    ports:
+      - "8082:8082"
+    networks:
+      - postgres
+    depends_on:
+      - db-service
+      - zipkin
+
+  discovery-service:
+    build:
+      context: ./discovery-service
+    ports:
+      - "8761:8761"
+    networks:
+        - postgres
+    depends_on:
+      - db-service
+      - auth-service
+      - postgres
+      - zipkin
+      - gateway-service
+      - pgadmin
+
   db-service:
+    build:
+      context: ./db-service
+    ports:
+      - "8084:8084"
+    networks:
+      - postgres
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: bookdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    depends_on:
+      - postgres
+      - zipkin
+
+  postgres:
     image: postgres:latest
     restart: unless-stopped
     environment:
@@ -12,6 +70,7 @@ services:
       - postgres:/data/postgres
     ports:
       - 5432:5432
+
   pgadmin:
     image: dpage/pgadmin4
     restart: always
@@ -24,6 +83,11 @@ services:
       - 5050:80
     volumes:
       - pgadmin:/var/lib/pgadmin
+    depends_on:
+      - postgres
+      - db-service
+      - zipkin
+
   zipkin:
     image: 'openzipkin/zipkin:latest'
     ports:
