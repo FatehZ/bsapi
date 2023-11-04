@@ -1,12 +1,15 @@
 package com.ktxdevelopment.authservice.security.service;
 
+import com.ktxdevelopment.authservice.client.AuthorFeignClient;
+import com.ktxdevelopment.authservice.client.StudentFeignClient;
 import com.ktxdevelopment.authservice.exceptions.AuthRequestIncorrectException;
 import com.ktxdevelopment.authservice.exceptions.UserNotFoundException;
 import com.ktxdevelopment.authservice.model.*;
-import com.ktxdevelopment.authservice.repo.UserRepository;
 import com.ktxdevelopment.authservice.repo.TokenRepository;
+import com.ktxdevelopment.authservice.repo.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.ws.rs.InternalServerErrorException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +26,10 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
 
     UserRepository userRepository;
+
+    StudentFeignClient studentClient;
+    AuthorFeignClient authorClient;
+
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
@@ -37,7 +44,21 @@ public class AuthenticationService {
                 .role(role)
                 .build();
 
-        var savedUser = userRepository.save(user);
+        UserEntity savedUser = userRepository.save(user);
+
+        String id;
+
+        if (role == Role.STUDENT) {
+            id = studentClient.saveStudent(new ClientUserRequestModel(user.getId(), request.getName(), request.getAge())).getId();
+        }else{
+            id = authorClient.saveAuthor(new ClientUserRequestModel(user.getId(), request.getName(), request.getAge())).getId();
+        }
+
+        if (id == null) {
+            userRepository.delete(savedUser);
+            throw new InternalServerErrorException("API error");   // basic transaction. may create retry mechanism, or use saga pattern
+        }
+
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUser, jwtToken);

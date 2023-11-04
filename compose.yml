@@ -1,61 +1,9 @@
 services:
 
-  gateway-service:
-    build:
-      context: ./gateway-service
-    restart: unless-stopped
+  zipkin:
+    image: 'openzipkin/zipkin:latest'
     ports:
-      - 8081:8081  # Assuming your gateway service runs on port 8081
-    depends_on:
-      - auth-service
-      - db-service
-      - postgres
-      - zipkin
-
-
-  auth-service:
-    build:
-      context: ./auth-service
-    ports:
-      - "8082:8082"
-    networks:
-      - postgres
-    depends_on:
-      - db-service
-      - zipkin
-
-  discovery-service:
-    build:
-      context: ./discovery-service
-    ports:
-      - "8761:8761"
-    networks:
-        - postgres
-    depends_on:
-      - db-service
-      - auth-service
-      - postgres
-      - zipkin
-      - gateway-service
-      - pgadmin
-
-  db-service:
-    build:
-      context: ./db-service
-    ports:
-      - "8084:8084"
-    networks:
-      - postgres
-    environment:
-      SPRING_PROFILES_ACTIVE: docker
-      POSTGRES_HOST: postgres
-      POSTGRES_PORT: 5432
-      POSTGRES_DB: bookdb
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
-    depends_on:
-      - postgres
-      - zipkin
+      - 9411:9411
 
   postgres:
     image: postgres:latest
@@ -65,11 +13,29 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: bookdb
     networks:
-      - postgres
+      - internal
     volumes:
       - postgres:/data/postgres
     ports:
       - 5432:5432
+
+  db-service:
+    build:
+      context: ./db-service
+    ports:
+      - 8084:8084
+    networks:
+      - internal
+    environment:
+      POSTGRES_PORT: 5432
+      POSTGRES_DB: bookdb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    depends_on:
+      - postgres
+      - zipkin
+
+
 
   pgadmin:
     image: dpage/pgadmin4
@@ -78,7 +44,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: fatehzaliyev@gmail.com
       PGADMIN_DEFAULT_PASSWORD: pgadminpassword
     networks:
-      - postgres
+      - internal
     ports:
       - 5050:80
     volumes:
@@ -88,13 +54,80 @@ services:
       - db-service
       - zipkin
 
-  zipkin:
-    image: 'openzipkin/zipkin:latest'
+
+  auth-service:
+    build:
+      context: ./auth-service
     ports:
-      - '9411:9411'
+      - 8082:8082
+    networks:
+      - internal
+    depends_on:
+      - db-service
+      - postgres
+      - zipkin
+
+
+  student-ms:
+    build:
+      context: ./student-ms
+    ports:
+      - 8083:8083
+    networks:
+      - internal
+    depends_on:
+      - db-service
+      - auth-service
+      - postgres
+      - zipkin
+
+
+  author-ms:
+    build:
+      context: ./author-ms
+    ports:
+      - 8085:8085
+    networks:
+      - internal
+    depends_on:
+      - auth-service
+      - db-service
+      - postgres
+      - zipkin
+
+  gateway-service:
+    build:
+      context: ./gateway-service
+    restart: unless-stopped
+    networks:
+      - internal
+    ports:
+      - 8081:8081
+    depends_on:
+      - auth-service
+      - db-service
+      - postgres
+      - zipkin
+
+
+  discovery-service:
+    build:
+      context: ./discovery-service
+    ports:
+      - 8761:8761
+    networks:
+        - internal
+    depends_on:
+      - db-service
+      - auth-service
+      - postgres
+      - zipkin
+      - gateway-service
+      - pgadmin
+
 
 networks:
-  postgres:
+  internal:
     driver: bridge
 
 volumes:

@@ -1,7 +1,7 @@
 # liquibase.properties
 
 driver: org.postgresql.Driver
-url: jdbc:postgresql://localhost:5432/bookdb
+url: jdbc:postgresql://internal:5432/bookdb
 username: user
 password: password
 

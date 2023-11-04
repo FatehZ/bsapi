@@ -6,7 +6,7 @@ spring:
     name: auth-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/bookdb
+    url: jdbc:postgresql://postgres:5432/bookdb
     username: user
     password: password
   jpa:
@@ -17,7 +17,7 @@ spring:
 eureka:
   client:
     serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: http://discovery-service:8761/eureka/
 
 application:
   security:
@@ -29,6 +29,6 @@ application:
 
 logging:
   level:
-    root: info
-    sql: info
-    web: info
+    root: error
+    sql: error
+    web: error

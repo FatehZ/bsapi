@@ -2,10 +2,15 @@ spring:
   liquibase:
     change-log: classpath:/db/changelog/db.changelog-master.yaml
   datasource:
-    url: jdbc:postgresql://localhost:5432/bookdb
+    url: jdbc:postgresql://postgres:5432/bookdb
     username: user
     password: password
     driver-class-name: org.postgresql.Driver
+  sleuth:
+    sampler:
+      probability: 1.0
+  zipkin:
+    baseUrl: http://zipkin:9411/
   jpa:
     hibernate:
       ddl-auto: update
@@ -14,13 +19,18 @@ spring:
     databasePlatform: org.hibernate.dialect.PostgreSQLDialect
     open-in-view: false
 
-
-
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/
+  instance:
+    preferIpAddress: true
 
 logging:
   level:
     root: error
     web: error
+    sql: error
 
 #server:
 #  port: 5432
