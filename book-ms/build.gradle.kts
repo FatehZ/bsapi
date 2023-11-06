@@ -11,6 +11,12 @@ java {
 	sourceCompatibility = JavaVersion.VERSION_17
 }
 
+configurations {
+	compileOnly {
+		extendsFrom(configurations.annotationProcessor.get())
+	}
+}
+
 repositories {
 	mavenCentral()
 }
@@ -26,8 +32,11 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("io.micrometer:micrometer-tracing-bridge-brave")
 	implementation("io.zipkin.reporter2:zipkin-reporter-brave")
+	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("org.postgresql:postgresql")
+	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

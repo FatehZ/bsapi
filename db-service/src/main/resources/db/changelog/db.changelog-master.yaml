@@ -28,13 +28,38 @@ databaseChangeLog:
                   type: varchar(7)
                   constraints:
                     nullable: false
-        - createIndex:
-            tableName: users
-            indexName: idx_email
-            unique: true
+
+  - changeSet:
+      id: createAuthorTable
+      author: fatehz
+      changes:
+        - createTable:
+            tableName: authors
             columns:
               - column:
-                  name: email
+                  name: id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: age
+                  type: integer
+                  constraints:
+                    nullable: false
+            foreignKeyConstraints:
+              - foreignKeyConstraint:
+                  baseTableName: authors
+                  baseColumnNames: id
+                  referencedTableName: users
+                  referencedColumnNames: id
+                  constraintName: fk_author_user
+
 
   - changeSet:
       id: createTokenTable
@@ -86,37 +111,6 @@ databaseChangeLog:
                         name: user_id
 
   - changeSet:
-      id: createAuthorTable
-      author: your_name
-      changes:
-        - createTable:
-            tableName: authors
-            columns:
-              - column:
-                  name: id
-                  type: varchar(36)
-                  constraints:
-                    primaryKey: true
-                    nullable: false
-              - column:
-                  name: name
-                  type: varchar(255)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: age
-                  type: integer
-                  constraints:
-                    nullable: false
-            indexes:
-              - createIndex:
-                  tableName: authors
-                  indexName: idx_author_id
-                  columns:
-                    - column:
-                        name: id
-
-  - changeSet:
       id: createBookTable
       author: fatehz
       changes:
@@ -140,19 +134,13 @@ databaseChangeLog:
                   constraints:
                     foreignKeyName: fk_book_author
                     references: authors(id)
-            indexes:
-              - createIndex:
-                  tableName: books
-                  indexName: idx_author_id
-                  columns:
-                    - column:
-                        name: author_id
-        - createIndex:
-            tableName: books
-            indexName: idx_author_id
-            columns:
-              - column:
-                  name: author_id
+            foreignKeyConstraints:
+              - foreignKeyConstraint:
+                  baseTableName: books
+                  baseColumnNames: author_id
+                  referencedTableName: authors
+                  referencedColumnNames: id
+                  constraintName: fk_book_author
 
   - changeSet:
       id: createStudentsTable

@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "author-ms",  url = "http://internal:8086")
+@FeignClient(name = "author-ms",  url = "http://author-ms:8085")
 public interface AuthorFeignClient {
 
     @PostMapping("/api/v1/author")

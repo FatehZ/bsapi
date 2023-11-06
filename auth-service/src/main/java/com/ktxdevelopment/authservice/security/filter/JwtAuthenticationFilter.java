@@ -33,19 +33,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
 
         if (request.getServletPath().contains("/api/v1/auth")) {
-            filterChain.doFilter(request, response); return; }
+            filterChain.doFilter(request, response); return;
+        }
 
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
-        final String userEmail;
+        final String userId;
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) { throw new AuthenticationException(); }
 
         jwt = authHeader.substring(7);
-        userEmail = jwtService.extractUsername(jwt);
+        userId = jwtService.extractUsername(jwt);
 
-        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+        if (userId != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userId);
 
             boolean isTokenValid = tokenRepo.findByToken(jwt)
                     .map(t -> !t.isExpired() && !t.isRevoked())

@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/auth-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/auth-service.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/author-ms.main.iml" filepath="$PROJECT_DIR$/.idea/modules/author-ms.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/book-ms.main.iml" filepath="$PROJECT_DIR$/.idea/modules/book-ms.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/bookstore.iml" filepath="$PROJECT_DIR$/.idea/bookstore.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/user-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/user-service.main.iml" />
     </modules>
   </component>
 </project>
