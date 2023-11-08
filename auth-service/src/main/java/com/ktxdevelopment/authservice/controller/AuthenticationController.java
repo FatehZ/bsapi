@@ -1,10 +1,10 @@
 package com.ktxdevelopment.authservice.controller;
 
-import com.ktxdevelopment.authservice.model.AuthenticationRequest;
-import com.ktxdevelopment.authservice.model.AuthenticationResponse;
-import com.ktxdevelopment.authservice.model.RegisterRequest;
+import com.ktxdevelopment.authservice.model.request.AuthenticationRequest;
+import com.ktxdevelopment.authservice.model.response.AuthenticationResponse;
+import com.ktxdevelopment.authservice.model.request.RegisterRequest;
 import com.ktxdevelopment.authservice.security.service.AuthenticationService;
-import com.ktxdevelopment.authservice.model.Role;
+import com.ktxdevelopment.authservice.model.entity.Role;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +33,6 @@ public class AuthenticationController {
   public ResponseEntity<AuthenticationResponse> registerAuthor(@RequestBody RegisterRequest request) {
     return ResponseEntity.ok(service.register(request, Role.AUTHOR));
   }
-
 
   @PostMapping("/authenticate")
   public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {

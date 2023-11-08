@@ -1,0 +1,7 @@
+# liquibase.properties
+
+driver: org.postgresql.Driver
+url: jdbc:postgresql://postgres-author:5433/authordb
+username: user
+password: password
+changeLogFile: classpath:/db/changelog/db-authors.yaml

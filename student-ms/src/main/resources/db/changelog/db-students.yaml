@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: createStudentTable
+      author: fatehz
+      changes:
+        - sql:
+            dbms: postgresql
+            endDelimiter: ;
+            splitStatements: true
+            sql: |
+              CREATE TABLE public.students (
+                id VARCHAR(36) NULL,
+                name VARCHAR(255) NOT NULL,
+                age INTEGER NOT NULL,
+                reading_books VARCHAR(36)[],
+                subscriptions VARCHAR(36)[]
+              );

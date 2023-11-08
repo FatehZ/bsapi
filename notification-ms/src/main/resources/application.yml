@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: notification-ms
+  rabbitmq:
+    host: notification-ms
+    port: 8090
+    username: user
+    password: password
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/

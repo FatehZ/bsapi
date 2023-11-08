@@ -4,7 +4,14 @@ import com.ktxdevelopment.authservice.client.AuthorFeignClient;
 import com.ktxdevelopment.authservice.client.StudentFeignClient;
 import com.ktxdevelopment.authservice.exceptions.AuthRequestIncorrectException;
 import com.ktxdevelopment.authservice.exceptions.UserNotFoundException;
-import com.ktxdevelopment.authservice.model.*;
+import com.ktxdevelopment.authservice.model.entity.Role;
+import com.ktxdevelopment.authservice.model.entity.Token;
+import com.ktxdevelopment.authservice.model.entity.UserEntity;
+import com.ktxdevelopment.authservice.model.request.AuthenticationRequest;
+import com.ktxdevelopment.authservice.model.request.ClientUserRequestModel;
+import com.ktxdevelopment.authservice.model.request.RegisterRequest;
+import com.ktxdevelopment.authservice.model.response.AuthenticationResponse;
+import com.ktxdevelopment.authservice.model.response.TokenValidationResponse;
 import com.ktxdevelopment.authservice.repo.TokenRepository;
 import com.ktxdevelopment.authservice.repo.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,10 +21,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.CredentialsExpiredException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 
 @Service
@@ -26,7 +37,6 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
 
     UserRepository userRepository;
-
     StudentFeignClient studentClient;
     AuthorFeignClient authorClient;
 
@@ -39,6 +49,7 @@ public class AuthenticationService {
     public AuthenticationResponse register(RegisterRequest request, Role role) {
 
         var user = UserEntity.builder()
+                .id(UUID.randomUUID().toString())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(role)
@@ -111,15 +122,15 @@ public class AuthenticationService {
     public AuthenticationResponse refreshToken(HttpServletRequest request, HttpServletResponse response) {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         final String refreshToken;
-        final String userEmail;
+        final String userId;
         if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
             throw new AuthRequestIncorrectException();
         }
 
         refreshToken = authHeader.substring(7);
-        userEmail = jwtService.extractUsername(refreshToken);
-        if (userEmail != null) {
-            var user = userRepository.findByEmail(userEmail).orElseThrow(UserNotFoundException::new);
+        userId = jwtService.extractUsername(refreshToken);
+        if (userId != null) {
+            var user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
 
             if (jwtService.isTokenValid(refreshToken, user)) {
 
@@ -131,5 +142,13 @@ public class AuthenticationService {
                 return AuthenticationResponse.builder().accessToken(accessToken).refreshToken(refreshToken).build();
             }
         }{ throw new AuthRequestIncorrectException(); }
+    }
+
+    public TokenValidationResponse validateAndExtractRole(String token) {
+        Token jwt = tokenRepository.findByToken(token).orElseThrow(UserNotFoundException::new);
+        if (jwt.isExpired() || jwt.isRevoked()) {
+            throw new CredentialsExpiredException("Token expired");
+        }
+        return TokenValidationResponse.builder().uid(jwt.getUserEntity().getId()).role(jwt.getUserEntity().getRole().name()).build();
     }
 }

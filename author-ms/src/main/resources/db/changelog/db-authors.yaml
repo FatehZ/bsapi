@@ -1,0 +1,29 @@
+databaseChangeLog:
+  - changeSet:
+      id: createAuthorTable
+      author: fatehz
+      changes:
+        - createTable:
+            tableName: authors
+            columns:
+              - column:
+                  name: id
+                  type: varchar(36)
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: age
+                  type: integer
+                  constraints:
+                    nullable: false
+              - column:
+                  name: written_books
+                  type: VARCHAR(36)[]
+                  constraints:
+                    nullable: true

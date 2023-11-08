@@ -1,18 +1,20 @@
-server:
-  port: 8081
-
 spring:
   application:
     name: auth-service
-
   datasource:
-    url: jdbc:postgresql://postgres:5432/bookdb
+    url: jdbc:postgresql://postgres-user:5434/userdb
     username: user
     password: password
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+  liquibase:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://postgres-user:5434/userdb
+    user: user
+    password: password
+    changeLog: classpath:/db/changelog/db-users.yaml
 
 eureka:
   client:
@@ -26,9 +28,3 @@ application:
       expiration: 172800000 # 2 days
       refresh-token:
         expiration: 1209600000 # 7 days
-
-logging:
-  level:
-    root: error
-    sql: error
-    web: error

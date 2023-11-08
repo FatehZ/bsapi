@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: user-ms
+  datasource:
+    url: jdbc:postgresql://postgres-user:5434/userdb
+    username: user
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/

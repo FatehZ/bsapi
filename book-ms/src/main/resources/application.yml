@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: book-ms
+
+  datasource:
+    url: jdbc:postgresql://postgres-book:5435/bookdb
+    username: user
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  liquibase:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://postgres-book:5435/bookdb
+    user: user
+    password: password
+    changeLog: classpath:/db/changelog/db-books.yaml
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/

@@ -7,6 +7,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,7 +27,14 @@ public class Author {
     @Column(name = "age")
     private Integer age;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
+    @ElementCollection
+    @CollectionTable(name = "written_books", joinColumns = @JoinColumn(name = "author_id"))
+    @Column(name = "book_id")
+    private Set<String> bookList;
+
+
+    public Set<String> getBookList() {
+        if (bookList == null) bookList = new HashSet<>();
+        return bookList;
+    }
 }

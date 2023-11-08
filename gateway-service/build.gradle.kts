@@ -18,14 +18,17 @@ repositories {
 extra["springCloudVersion"] = "2022.0.4"
 
 dependencies {
+	implementation("io.springfox:springfox-swagger-ui:3.0.0")
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
 	implementation("org.springframework.cloud:spring-cloud-starter-gateway")
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-client")
+	implementation("org.projectlombok:lombok:1.18.28")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("io.projectreactor:reactor-test")
 	testImplementation("org.springframework.security:spring-security-test")
 	implementation ("org.springframework.cloud:spring-cloud-starter-openfeign")
+	implementation("org.springframework.boot:spring-boot-starter-web")
 }
 
 dependencyManagement {

@@ -1,0 +1,9 @@
+# liquibase.properties
+
+driver: org.postgresql.Driver
+url: jdbc:postgresql://postgres-user:5434/userdb
+username: user
+password: password
+
+# Liquibase settings
+changeLogFile: classpath:/db/changelog/db-users.yaml

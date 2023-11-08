@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: author-ms
+  datasource:
+    url: jdbc:postgresql://postgres-author:5433/authordb
+    username: user
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  liquibase:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://postgres-author:5433/authordb
+    user: user
+    password: password
+    changeLog: classpath:/db/changelog/db-authors.yaml
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://discovery-service:8761/eureka/

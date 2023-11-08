@@ -1,6 +1,6 @@
 package com.ktxdevelopment.authservice.security.service;
 
-import com.ktxdevelopment.authservice.model.UserEntity;
+import com.ktxdevelopment.authservice.model.entity.UserEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -23,11 +23,11 @@ public class JwtService {
   @Value("${application.security.jwt.expiration}") private long jwtTokenExpiration;
   @Value("${application.security.jwt.refresh-token.expiration}") private long refreshTokenExpiration;
 
-  public String generateToken(UserEntity userDetails) {
+  public String generateToken(UserDetails userDetails) {
     return generateToken(new HashMap<>(), userDetails);
   }
 
-  public String generateToken(Map<String, Object> extraClaims, UserEntity userDetails) {
+  public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
     return buildToken(extraClaims, userDetails, jwtTokenExpiration);
   }
 
@@ -35,7 +35,7 @@ public class JwtService {
     return buildToken(new HashMap<>(), userDetails, refreshTokenExpiration);
   }
 
-  private String buildToken(Map<String, Object> extraClaims, UserEntity userDetails, long expiration) {
+  private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
     return Jwts.builder()
             .setClaims(extraClaims)
             .setSubject(userDetails.getUsername())   // ID field (as username - unique attribute)

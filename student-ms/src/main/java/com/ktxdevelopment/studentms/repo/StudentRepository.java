@@ -1,23 +1,22 @@
 package com.ktxdevelopment.studentms.repo;
 
-
-import com.ktxdevelopment.studentms.model.ClientAuthorRequestModel;
-import com.ktxdevelopment.studentms.model.UserClientResponse;
-import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
+import com.ktxdevelopment.studentms.model.Student;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-@RequiredArgsConstructor
-public class StudentRepository {
+public interface StudentRepository extends JpaRepository<Student, String> {
 
-    private final JdbcTemplate jdbcTemplate;
+    @Query("SELECT s FROM students s WHERE :id MEMBER OF s.reading_books")
+    Optional<List<Student>> findUsersByReadingBook(@Param("id") String bookId);
 
-    public UserClientResponse saveStudent(ClientAuthorRequestModel model) {
-        int rowsAffected  = jdbcTemplate.update("INSERT INTO students (id, name, age) VALUES (?, ?, ?)", model.getId(), model.getName(), model.getAge());
-        if (rowsAffected > 0) return new UserClientResponse(model.getId());
-        else return new UserClientResponse(null);   // If failed return null.
-    }
+
+    @Query("SELECT s.id FROM students s WHERE :id MEMBER OF s.subscriptions")
+    Optional<List<String>> findUsersBySubscriberAuthor(@Param("id") String authorId);
 }

@@ -4,54 +4,44 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3161be74-d6f3-45ea-a0b0-b232ffd8dfe2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/modules/auth-service.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/author-ms.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/book-ms.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules/user-service.main.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/controller/AuthorController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/model/Author.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/model/ClientAuthorRequestModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/model/Role.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/model/Token.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/model/UserClientResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/model/UserEntity.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/repo/AuthorRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/service/AuthorService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/service/AuthorServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway-service/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jpa-buddy.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jpa-buddy.xml" afterDir="false" />
+    <list default="true" id="3161be74-d6f3-45ea-a0b0-b232ffd8dfe2" name="Changes" comment="Before seperating databases">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/ktxdevelopment/authservice/client/AuthorFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/ktxdevelopment/authservice/client/AuthorFeignClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/ktxdevelopment/authservice/client/StudentFeignClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/ktxdevelopment/authservice/client/StudentFeignClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/ktxdevelopment/authservice/model/UserEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/ktxdevelopment/authservice/model/UserEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/ktxdevelopment/authservice/security/config/ApplicationConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/ktxdevelopment/authservice/security/config/ApplicationConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/ktxdevelopment/authservice/security/filter/JwtAuthenticationFilter.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/ktxdevelopment/authservice/security/filter/JwtAuthenticationFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/ktxdevelopment/authservice/model/UserClientResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/book-ms/src/main/java/com/ktxdevelopment/bookms/model/GlobalClientResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auth-service/src/main/java/com/ktxdevelopment/authservice/security/service/JwtService.java" beforeDir="false" afterPath="$PROJECT_DIR$/auth-service/src/main/java/com/ktxdevelopment/authservice/security/service/JwtService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/author-ms/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/author-ms/build.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/author-ms/settings.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/AuthorMsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/AuthorMsApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auth-service/src/main/resources/application.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/author-ms/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/author-ms/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/controller/AuthorController.java" beforeDir="false" afterPath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/controller/AuthorController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/model/Author.java" beforeDir="false" afterPath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/model/Author.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/model/UserClientResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/model/GlobalClientResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/repo/AuthorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/repo/AuthorRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/service/AuthorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/service/AuthorService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/service/AuthorServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/service/AuthorServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/author-ms/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/book-ms/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/book-ms/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book-ms/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/book-ms/settings.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book-ms/src/main/java/com/ktxdevelopment/bookms/BookMsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/book-ms/src/main/java/com/ktxdevelopment/bookms/BookMsApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book-ms/src/main/java/com/ktxdevelopment/bookms/controller/BookController.java" beforeDir="false" afterPath="$PROJECT_DIR$/book-ms/src/main/java/com/ktxdevelopment/bookms/controller/BookController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/book-ms/src/main/resources/application.properties" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db-service/src/main/resources/db/changelog/changelog-master.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/db-service/src/main/resources/db/changelog/db.changelog-master.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/db-service/src/main/resources/db/changelog/db.changelog-master.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db-service/src/main/resources/db/changelog/liquibase-changelog.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-ms/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-ms/build.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-ms/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-ms/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-ms/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-ms/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-ms/settings.gradle.kts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-ms/src/main/java/com/ktxdevelopment/studentms/StudentMsApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-service/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/db-service/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-service/src/main/resources/db/changelog/db.changelog-master.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/db-service/src/main/resources/db/changelog/db-users.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db-service/src/main/resources/liquibase.yml" beforeDir="false" afterPath="$PROJECT_DIR$/db-service/src/main/resources/liquibase.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-ms/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/student-ms/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-ms/src/main/java/com/ktxdevelopment/studentms/StudentMsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-ms/src/main/java/com/ktxdevelopment/studentms/StudentMsApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-ms/src/main/java/com/ktxdevelopment/studentms/controller/StudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-ms/src/main/java/com/ktxdevelopment/studentms/controller/StudentController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-ms/src/main/java/com/ktxdevelopment/studentms/model/UserClientResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-ms/src/main/java/com/ktxdevelopment/studentms/model/GlobalClientResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-ms/src/main/java/com/ktxdevelopment/studentms/repo/StudentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-ms/src/main/java/com/ktxdevelopment/studentms/repo/StudentRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-ms/src/main/java/com/ktxdevelopment/studentms/service/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-ms/src/main/java/com/ktxdevelopment/studentms/service/StudentService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/student-ms/src/main/java/com/ktxdevelopment/studentms/service/StudentServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/student-ms/src/main/java/com/ktxdevelopment/studentms/service/StudentServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/student-ms/src/main/resources/application.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/student-ms/src/test/java/com/ktxdevelopment/studentms/StudentMsApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/ktxdevelopment/userservice/controller/internal/UserControllerInternal.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/ktxdevelopment/userservice/controller/internal/UserControllerInternal.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/ktxdevelopment/userservice/model/client/UserClientResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/ktxdevelopment/userservice/model/client/GlobalClientResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/user-service/src/main/java/com/ktxdevelopment/userservice/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/user-service/src/main/java/com/ktxdevelopment/userservice/service/UserService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -106,6 +96,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -129,12 +122,26 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "jdk.selected.JAVA_MODULE": "Android API 33, extension level 3 Platform",
-    "last_opened_file_path": "/home/neon/Desktop/bookstore/student-ms/src/main/java/com/ktxdevelopment/studentms"
+    "last_opened_file_path": "/home/neon/Desktop/bookstore/author-ms/src/main/java/com/ktxdevelopment/authorms/exception/model",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.ktxdevelopment.bookms.service" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/student-ms/src/main/java/com/ktxdevelopment/studentms" />
+      <recent name="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/exception/model" />
+      <recent name="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms/exception" />
+      <recent name="$PROJECT_DIR$/author-ms/src/main/java/com/ktxdevelopment/authorms" />
+      <recent name="$PROJECT_DIR$/book-ms/src/main/java/com/ktxdevelopment/bookms/exception" />
+      <recent name="$PROJECT_DIR$/author-ms" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/book-ms/src/main/resources/db" />
     </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
@@ -146,6 +153,19 @@
       <option name="presentableId" value="Default" />
       <updated>1699287844744</updated>
     </task>
+    <task id="LOCAL-00001" summary="Before seperating databases">
+      <option name="closed" value="true" />
+      <created>1699293293418</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1699293293418</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Before seperating databases" />
+    <option name="LAST_COMMIT_MESSAGE" value="Before seperating databases" />
   </component>
 </project>

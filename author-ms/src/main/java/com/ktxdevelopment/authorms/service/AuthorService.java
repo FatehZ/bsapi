@@ -1,12 +1,13 @@
 package com.ktxdevelopment.authorms.service;
 
-import com.ktxdevelopment.authorms.model.Author;
 import com.ktxdevelopment.authorms.model.ClientAuthorRequestModel;
-import com.ktxdevelopment.authorms.model.UserClientResponse;
+import com.ktxdevelopment.authorms.model.GlobalClientResponse;
 
 public interface AuthorService {
 
-    void deleteBookOfAuthor(String bookId, String authorId);
+    GlobalClientResponse deleteBookOfAuthor(String bookId, String authorId);
 
-    UserClientResponse saveAuthor(ClientAuthorRequestModel request);
+    GlobalClientResponse saveAuthor(ClientAuthorRequestModel request);
+
+    GlobalClientResponse saveBookToAuthor(String id, String uid);
 }

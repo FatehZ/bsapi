@@ -1,11 +1,10 @@
 services:
-
   zipkin:
     image: 'openzipkin/zipkin:latest'
     ports:
       - 9411:9411
 
-  postgres:
+  postgres-book:
     image: postgres:latest
     restart: unless-stopped
     environment:
@@ -17,42 +16,64 @@ services:
     volumes:
       - postgres:/data/postgres
     ports:
-      - 5432:5432
+      - 5435:5435
 
-  db-service:
-    build:
-      context: ./db-service
+
+  rabbitmq:
+    image: "rabbitmq:3.8-management"
+    container_name: rabbitmq
     ports:
-      - 8084:8084
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "user"
+      RABBITMQ_DEFAULT_PASS: "password"
     networks:
       - internal
+
+
+
+  postgres-user:
+    image: postgres:latest
+    restart: unless-stopped
     environment:
-      POSTGRES_PORT: 5432
-      POSTGRES_DB: bookdb
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
-    depends_on:
-      - postgres
-      - zipkin
-
-
-
-  pgadmin:
-    image: dpage/pgadmin4
-    restart: always
-    environment:
-      PGADMIN_DEFAULT_EMAIL: dev@fateh.org.uk
-      PGADMIN_DEFAULT_PASSWORD: pgadminpassword
+      POSTGRES_DB: userdb
     networks:
       - internal
-    ports:
-      - 5050:80
     volumes:
-      - pgadmin:/var/lib/pgadmin
-    depends_on:
-      - postgres
-      - db-service
-      - zipkin
+      - postgres:/data/postgres
+    ports:
+      - 5434:5434
+
+  postgres-author:
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: authordb
+    networks:
+      - internal
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - 5433:5433
+
+  postgres-student:
+    image: postgres:latest
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: studentdb
+    networks:
+      - internal
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - 5432:5432
 
 
   auth-service:
@@ -63,8 +84,7 @@ services:
     networks:
       - internal
     depends_on:
-      - db-service
-      - postgres
+      - postgres-user
       - zipkin
 
 
@@ -76,9 +96,8 @@ services:
     networks:
       - internal
     depends_on:
-      - db-service
       - auth-service
-      - postgres
+      - postgres-student
       - zipkin
 
 
@@ -91,9 +110,34 @@ services:
       - internal
     depends_on:
       - auth-service
-      - db-service
-      - postgres
+      - postgres-author
       - zipkin
+
+  book-ms:
+    build:
+      context: ./book-ms
+    ports:
+      - 8089:8089
+    networks:
+      - internal
+    depends_on:
+      - auth-service
+      - postgres-book
+      - zipkin
+
+
+  user-ms:
+    build:
+      context: ./user-ms
+    ports:
+      - 8093:8093
+    networks:
+      - internal
+    depends_on:
+      - postgres-user
+      - auth-service
+      - zipkin
+
 
   gateway-service:
     build:
@@ -105,10 +149,26 @@ services:
       - 8081:8081
     depends_on:
       - auth-service
-      - db-service
-      - postgres
+      - author-ms
+      - book-ms
+      - student-ms
+      - postgres-student
+      - postgres-book
+      - postgres-author
+      - postgres-user
       - zipkin
 
+  notification-ms:
+    build:
+      context: ./gateway-service
+    restart: unless-stopped
+    networks:
+      - internal
+    ports:
+      - 8091:8091
+    depends_on:
+      - rabbitmq
+      - zipkin
 
   discovery-service:
     build:
@@ -118,12 +178,16 @@ services:
     networks:
         - internal
     depends_on:
-      - db-service
       - auth-service
-      - postgres
+      - book-ms
+      - student-ms
+      - author-ms
+      - postgres-user
+      - postgres-author
+      - postgres-book
+      - postgres-student
       - zipkin
       - gateway-service
-      - pgadmin
 
 
 networks:
@@ -132,4 +196,3 @@ networks:
 
 volumes:
   postgres:
-  pgadmin:

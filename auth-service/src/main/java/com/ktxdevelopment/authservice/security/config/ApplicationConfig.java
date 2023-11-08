@@ -1,7 +1,6 @@
 package com.ktxdevelopment.authservice.security.config;
 
 import com.ktxdevelopment.authservice.repo.UserRepository;
-import com.ktxdevelopment.authservice.security.service.LogoutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,10 +41,5 @@ public class ApplicationConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public LogoutHandler logoutHandler() {
-        return new LogoutService();
     }
 }
